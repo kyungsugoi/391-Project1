@@ -28,33 +28,44 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.lstClassBox = new System.Windows.Forms.ListBox();
+            this.cmbSemester = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
-            // textBox1
+            // txtSearch
             // 
-            this.textBox1.Location = new System.Drawing.Point(62, 34);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(680, 20);
-            this.textBox1.TabIndex = 0;
-            this.textBox1.Text = "Search";
+            this.txtSearch.Location = new System.Drawing.Point(62, 78);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(680, 20);
+            this.txtSearch.TabIndex = 0;
+            this.txtSearch.Text = "Search";
             // 
-            // listBox1
+            // lstClassBox
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(62, 110);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(680, 277);
-            this.listBox1.TabIndex = 1;
+            this.lstClassBox.FormattingEnabled = true;
+            this.lstClassBox.Location = new System.Drawing.Point(62, 124);
+            this.lstClassBox.Name = "lstClassBox";
+            this.lstClassBox.Size = new System.Drawing.Size(680, 277);
+            this.lstClassBox.TabIndex = 1;
+            // 
+            // cmbSemester
+            // 
+            this.cmbSemester.FormattingEnabled = true;
+            this.cmbSemester.Location = new System.Drawing.Point(62, 28);
+            this.cmbSemester.Name = "cmbSemester";
+            this.cmbSemester.Size = new System.Drawing.Size(121, 21);
+            this.cmbSemester.TabIndex = 2;
+            this.cmbSemester.Text = "Semester";
             // 
             // ClassSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(800, 428);
+            this.Controls.Add(this.cmbSemester);
+            this.Controls.Add(this.lstClassBox);
+            this.Controls.Add(this.txtSearch);
             this.Name = "ClassSearch";
             this.Text = "Form2";
             this.ResumeLayout(false);
@@ -64,7 +75,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.ListBox lstClassBox;
+        private System.Windows.Forms.ComboBox cmbSemester;
     }
 }
