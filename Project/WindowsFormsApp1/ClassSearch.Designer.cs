@@ -28,149 +28,156 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.CMPT391 = new System.Windows.Forms.ListBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.cmbSemester = new System.Windows.Forms.ComboBox();
-            this.btnShop = new System.Windows.Forms.Button();
-            this.Sept_Dec = new System.Windows.Forms.ListBox();
-            this.StartTime_EndTime = new System.Windows.Forms.ListBox();
-            this.AS01 = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblDates = new System.Windows.Forms.Label();
-            this.lblTime = new System.Windows.Forms.Label();
-            this.lblSection = new System.Windows.Forms.Label();
+            this.txtSearch = new System.Windows.Forms.TextBox();
+            this.lstClassBox = new System.Windows.Forms.ListBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.INSTRUCTOR = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // txtSearch
+            // tabControl1
             // 
-            this.txtSearch.Location = new System.Drawing.Point(62, 65);
-            this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(680, 20);
-            this.txtSearch.TabIndex = 0;
-            this.txtSearch.Text = "Search";
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(925, 526);
+            this.tabControl1.TabIndex = 0;
             // 
-            // CMPT391
+            // tabPage1
             // 
-            this.CMPT391.FormattingEnabled = true;
-            this.CMPT391.Location = new System.Drawing.Point(62, 117);
-            this.CMPT391.Name = "CMPT391";
-            this.CMPT391.Size = new System.Drawing.Size(166, 251);
-            this.CMPT391.TabIndex = 1;
+            this.tabPage1.Controls.Add(this.listBox1);
+            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Controls.Add(this.cmbSemester);
+            this.tabPage1.Controls.Add(this.txtSearch);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(917, 500);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.lstClassBox);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(917, 500);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // cmbSemester
             // 
             this.cmbSemester.FormattingEnabled = true;
-            this.cmbSemester.Location = new System.Drawing.Point(62, 28);
+            this.cmbSemester.Location = new System.Drawing.Point(70, 25);
             this.cmbSemester.Name = "cmbSemester";
             this.cmbSemester.Size = new System.Drawing.Size(121, 21);
-            this.cmbSemester.TabIndex = 2;
+            this.cmbSemester.TabIndex = 12;
             this.cmbSemester.Text = "Semester";
             // 
-            // btnShop
+            // txtSearch
             // 
-            this.btnShop.Location = new System.Drawing.Point(626, 374);
-            this.btnShop.Name = "btnShop";
-            this.btnShop.Size = new System.Drawing.Size(116, 42);
-            this.btnShop.TabIndex = 3;
-            this.btnShop.TabStop = false;
-            this.btnShop.Text = "Shopping Cart";
-            this.btnShop.UseVisualStyleBackColor = true;
+            this.txtSearch.Location = new System.Drawing.Point(70, 62);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(680, 20);
+            this.txtSearch.TabIndex = 11;
+            this.txtSearch.Text = "Search";
             // 
-            // Sept_Dec
+            // lstClassBox
             // 
-            this.Sept_Dec.FormattingEnabled = true;
-            this.Sept_Dec.Location = new System.Drawing.Point(234, 117);
-            this.Sept_Dec.Name = "Sept_Dec";
-            this.Sept_Dec.Size = new System.Drawing.Size(166, 251);
-            this.Sept_Dec.TabIndex = 4;
+            this.lstClassBox.FormattingEnabled = true;
+            this.lstClassBox.Location = new System.Drawing.Point(118, 112);
+            this.lstClassBox.Name = "lstClassBox";
+            this.lstClassBox.Size = new System.Drawing.Size(680, 277);
+            this.lstClassBox.TabIndex = 8;
             // 
-            // StartTime_EndTime
+            // dataGridView1
             // 
-            this.StartTime_EndTime.FormattingEnabled = true;
-            this.StartTime_EndTime.Location = new System.Drawing.Point(406, 117);
-            this.StartTime_EndTime.Name = "StartTime_EndTime";
-            this.StartTime_EndTime.Size = new System.Drawing.Size(166, 251);
-            this.StartTime_EndTime.TabIndex = 5;
+            this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.ID,
+            this.Column2,
+            this.INSTRUCTOR});
+            this.dataGridView1.Location = new System.Drawing.Point(70, 111);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(442, 359);
+            this.dataGridView1.TabIndex = 13;
             // 
-            // AS01
+            // Column1
             // 
-            this.AS01.FormattingEnabled = true;
-            this.AS01.Location = new System.Drawing.Point(576, 117);
-            this.AS01.Name = "AS01";
-            this.AS01.Size = new System.Drawing.Size(166, 251);
-            this.AS01.TabIndex = 6;
+            this.Column1.HeaderText = "NAME";
+            this.Column1.Name = "Column1";
             // 
-            // label1
+            // ID
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(121, 101);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Class";
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
             // 
-            // lblDates
+            // Column2
             // 
-            this.lblDates.AutoSize = true;
-            this.lblDates.Location = new System.Drawing.Point(301, 101);
-            this.lblDates.Name = "lblDates";
-            this.lblDates.Size = new System.Drawing.Size(35, 13);
-            this.lblDates.TabIndex = 8;
-            this.lblDates.Text = "Dates";
+            this.Column2.HeaderText = "DATE";
+            this.Column2.Name = "Column2";
             // 
-            // lblTime
+            // INSTRUCTOR
             // 
-            this.lblTime.AutoSize = true;
-            this.lblTime.Location = new System.Drawing.Point(480, 101);
-            this.lblTime.Name = "lblTime";
-            this.lblTime.Size = new System.Drawing.Size(30, 13);
-            this.lblTime.TabIndex = 9;
-            this.lblTime.Text = "Time";
+            this.INSTRUCTOR.HeaderText = "INSTRUCT";
+            this.INSTRUCTOR.Name = "INSTRUCTOR";
             // 
-            // lblSection
+            // listBox1
             // 
-            this.lblSection.AutoSize = true;
-            this.lblSection.Location = new System.Drawing.Point(643, 101);
-            this.lblSection.Name = "lblSection";
-            this.lblSection.Size = new System.Drawing.Size(43, 13);
-            this.lblSection.TabIndex = 10;
-            this.lblSection.Text = "Section";
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(545, 111);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(311, 368);
+            this.listBox1.TabIndex = 14;
             // 
             // ClassSearch
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 428);
-            this.Controls.Add(this.lblSection);
-            this.Controls.Add(this.lblTime);
-            this.Controls.Add(this.lblDates);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.AS01);
-            this.Controls.Add(this.StartTime_EndTime);
-            this.Controls.Add(this.Sept_Dec);
-            this.Controls.Add(this.btnShop);
-            this.Controls.Add(this.cmbSemester);
-            this.Controls.Add(this.CMPT391);
-            this.Controls.Add(this.txtSearch);
+            this.ClientSize = new System.Drawing.Size(951, 567);
+            this.Controls.Add(this.tabControl1);
             this.Name = "ClassSearch";
             this.Text = "Classes";
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.ListBox CMPT391;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn INSTRUCTOR;
         private System.Windows.Forms.ComboBox cmbSemester;
-        private System.Windows.Forms.Button btnShop;
-        private System.Windows.Forms.ListBox Sept_Dec;
-        private System.Windows.Forms.ListBox StartTime_EndTime;
-        private System.Windows.Forms.ListBox AS01;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblDates;
-        private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.Label lblSection;
+        private System.Windows.Forms.TextBox txtSearch;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ListBox lstClassBox;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
