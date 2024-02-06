@@ -17,6 +17,22 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            string user = txtUsername.Text;
+            string pass = txtPassword.Text;
+            string u = "user1";
+            string p = "pass1";
+            
+            if (String.Equals(user, u) && String.Equals(pass, p))
+            {
+                ClassSearch classSearch = new ClassSearch();
+                classSearch.Show();
+
+            } else
+            {
+                lblError.Visible = true; 
+            }
+        }
     }
 }
