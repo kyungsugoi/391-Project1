@@ -34,6 +34,7 @@
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.btnLogin = new System.Windows.Forms.Button();
+            this.lblError = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblLoginText
@@ -58,6 +59,7 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(44, 278);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(306, 20);
             this.txtPassword.TabIndex = 2;
             // 
@@ -81,18 +83,32 @@
             // 
             // btnLogin
             // 
-            this.btnLogin.Location = new System.Drawing.Point(275, 367);
+            this.btnLogin.Location = new System.Drawing.Point(258, 356);
             this.btnLogin.Name = "btnLogin";
-            this.btnLogin.Size = new System.Drawing.Size(75, 23);
+            this.btnLogin.Size = new System.Drawing.Size(92, 34);
             this.btnLogin.TabIndex = 5;
             this.btnLogin.Text = "Login";
             this.btnLogin.UseVisualStyleBackColor = true;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            // 
+            // lblError
+            // 
+            this.lblError.AutoSize = true;
+            this.lblError.ForeColor = System.Drawing.Color.Firebrick;
+            this.lblError.Location = new System.Drawing.Point(119, 104);
+            this.lblError.Name = "lblError";
+            this.lblError.Size = new System.Drawing.Size(150, 13);
+            this.lblError.TabIndex = 6;
+            this.lblError.Text = "Invalid Username or Password";
+            this.lblError.Visible = false;
             // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.LavenderBlush;
             this.ClientSize = new System.Drawing.Size(399, 450);
+            this.Controls.Add(this.lblError);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.lblPassword);
             this.Controls.Add(this.lblUsername);
@@ -114,6 +130,7 @@
         private System.Windows.Forms.Label lblUsername;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.Button btnLogin;
+        private System.Windows.Forms.Label lblError;
     }
 }
 

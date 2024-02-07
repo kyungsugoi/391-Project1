@@ -47,11 +47,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cart.cs">
+    <Compile Include="CourseInfo.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cart.Designer.cs">
-      <DependentUpon>Cart.cs</DependentUpon>
+    <Compile Include="CourseInfo.Designer.cs">
+      <DependentUpon>CourseInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CMPT391_1DataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMPT391_1DataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Enroll.cs">
       <SubType>Form</SubType>
@@ -73,8 +78,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Cart.resx">
-      <DependentUpon>Cart.cs</DependentUpon>
+    <EmbeddedResource Include="CourseInfo.resx">
+      <DependentUpon>CourseInfo.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassSearch.resx">
       <DependentUpon>ClassSearch.cs</DependentUpon>
@@ -94,6 +99,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="CMPT391_1DataSet.xsc">
+      <DependentUpon>CMPT391_1DataSet.xsd</DependentUpon>
+    </None>
+    <None Include="CMPT391_1DataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>CMPT391_1DataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="CMPT391_1DataSet.xss">
+      <DependentUpon>CMPT391_1DataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
