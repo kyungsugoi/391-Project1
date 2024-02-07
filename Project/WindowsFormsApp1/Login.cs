@@ -17,6 +17,8 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
+
+        //  ------------------------ BUTTON CLICK ----------------------------------------
         private void btnLogin_Click(object sender, EventArgs e)
         {
             string user = txtUsername.Text;
@@ -28,6 +30,7 @@ namespace WindowsFormsApp1
             {
                 ClassSearch classSearch = new ClassSearch();
                 classSearch.Show();
+                this.Hide();
 
             } else
             {
