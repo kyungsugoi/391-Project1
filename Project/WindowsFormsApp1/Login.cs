@@ -22,8 +22,8 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
-            // Nadir's Sql:            ADD YOUR CONNECTION STRING AND COMMENT OUT MINE OR JUST CHANGE SERVER NAME TO YOURS
-            String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
+            // localhost will default to your server, no need to hardcode it anymore
+            String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
             SqlConnection myConnection = new SqlConnection(connectionString);
 
             try
