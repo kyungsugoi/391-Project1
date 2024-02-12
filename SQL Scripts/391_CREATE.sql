@@ -9,7 +9,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Classroom](
-	[classroomID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[classroomID] [numeric](18, 0) NOT NULL,
 	[classroomName] [varchar](max) NOT NULL,
 	[capacity] [numeric](3, 0) NOT NULL,
  CONSTRAINT [PK_Classroom_1] PRIMARY KEY CLUSTERED 
@@ -24,7 +24,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Course](
-	[courseID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[courseID] [char](7) NOT NULL,
 	[courseName] [varchar](max) NOT NULL,
 	[courseDescription] [varchar](max) NOT NULL,
 	[credits] [tinyint] NOT NULL,
@@ -41,7 +41,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Department](
-	[departmentID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[departmentID] [numeric](18, 0) NOT NULL,
 	[departmentName] [varchar](max) NOT NULL,
 	[departmentHeadID] [numeric](18, 0) NULL,
  CONSTRAINT [PK__Departme__F9B8344D20663C23] PRIMARY KEY CLUSTERED 
@@ -56,7 +56,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Instructor](
-	[instructorID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[instructorID] [numeric](18, 0) NOT NULL,
 	[firstName] [varchar](max) NOT NULL,
 	[lastName] [varchar](max) NOT NULL,
 	[departmentID] [numeric](18, 0) NOT NULL,
@@ -72,8 +72,8 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Prereq](
-	[courseID] [numeric](18, 0) NOT NULL,
-	[prereqID] [numeric](18, 0) NOT NULL,
+	[courseID] [char](7) NOT NULL,
+	[prereqID] [char](7) NOT NULL,
  CONSTRAINT [PK_Prereq] PRIMARY KEY CLUSTERED 
 (
 	[courseID] ASC,
@@ -87,7 +87,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Section](
-	[sectionID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[sectionID] [numeric](18, 0) NOT NULL,
 	[sectionName] [varchar](max) NOT NULL,
 	[sectionType] [varchar](max) NOT NULL,
 	[semester] [varchar](max) NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE [dbo].[Section](
 	[sectionSize] [numeric](3, 0) NOT NULL,
 	[enrolled] [numeric](3, 0) NOT NULL,
 	[instructorID] [numeric](18, 0) NOT NULL,
-	[courseID] [numeric](18, 0) NOT NULL,
+	[courseID] [char](7) NOT NULL,
 	[classroomID] [numeric](18, 0) NOT NULL,
  CONSTRAINT [PK_Section] PRIMARY KEY CLUSTERED 
 (
@@ -124,7 +124,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[Student](
-	[studentID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[studentID] [numeric](18, 0) NOT NULL,
 	[firstName] [varchar](max) NOT NULL,
 	[lastName] [varchar](max) NOT NULL,
 	[activeStudent] [bit] NOT NULL,
@@ -157,7 +157,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[TimeSlot](
-	[timeSlotID] [numeric](18, 0) IDENTITY(1,1) NOT NULL,
+	[timeSlotID] [numeric](18, 0) NOT NULL,
 	[day] [varchar](max) NOT NULL,
 	[startTime] [time](0) NOT NULL,
 	[endTime] [time](0) NOT NULL,
@@ -225,10 +225,6 @@ ALTER TABLE [dbo].[Classroom]  WITH CHECK ADD  CONSTRAINT [CK_Classroom_classroo
 GO
 ALTER TABLE [dbo].[Classroom] CHECK CONSTRAINT [CK_Classroom_classroomID_NonNegative]
 GO
-ALTER TABLE [dbo].[Course]  WITH CHECK ADD  CONSTRAINT [CK_Course_courseID_NonNegative] CHECK  (([courseID]>(0)))
-GO
-ALTER TABLE [dbo].[Course] CHECK CONSTRAINT [CK_Course_courseID_NonNegative]
-GO
 ALTER TABLE [dbo].[Department]  WITH CHECK ADD  CONSTRAINT [CK_Department_departmentID_NonNegative] CHECK  (([departmentID]>(0)))
 GO
 ALTER TABLE [dbo].[Department] CHECK CONSTRAINT [CK_Department_departmentID_NonNegative]
@@ -256,8 +252,6 @@ GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Classrooms should have positive number capacity' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Classroom', @level2type=N'CONSTRAINT',@level2name=N'CK_Classroom_capacity_NonNegative'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'IDs should be positive numbers' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Classroom', @level2type=N'CONSTRAINT',@level2name=N'CK_Classroom_classroomID_NonNegative'
-GO
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'IDs should be positive numbers' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Course', @level2type=N'CONSTRAINT',@level2name=N'CK_Course_courseID_NonNegative'
 GO
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'IDs should be positive numbers' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'Department', @level2type=N'CONSTRAINT',@level2name=N'CK_Department_departmentID_NonNegative'
 GO
