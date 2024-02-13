@@ -1,3 +1,24 @@
+-- SP inserts studentID and sectionID into takes table 
+-- only when enrolled < sectionSize and the student is not already in that section
+CREATE PROCEDURE spEnroll
+@studentID INT,
+@sectionID INT
+AS
+BEGIN
+	BEGIN TRY
+		BEGIN TRANSACTION
+			
+			INSERT INTO Takes(studentID, sectionID) Values(@studentID, @sectionID)
+			UPDATE Section set enrolled += 1 where Section.sectionID = @sectionID
+
+		Commit TRANSACTION
+	END TRY
+	BEGIN CATCH
+		Rollback Transaction
+		Print 'TRANSACTION ROLLED BACK!!!!'
+	END CATCH
+END;
+
 -- SP gets information about student (minus information about password)
 CREATE PROCEDURE spViewStudent 
 @studentID INT
