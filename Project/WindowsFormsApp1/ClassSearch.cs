@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace WindowsFormsApp1
 {
@@ -44,27 +45,36 @@ namespace WindowsFormsApp1
 
             this.FormClosing += YourForm_FormClosing;
 
-            // FILL TABLE DATA HERE
-
+           
+            SqlDataAdapter adpt = new SqlDataAdapter("Select * from course", myConnection);
+            DataTable dt = new DataTable();
+            adpt.Fill(dt);
+            dataCourseOfferings.DataSource = dt;
         }
 
         //  ------------------------ BUTTON CLICK ----------------------------------------
         private void txtSearch_Click(object sender, EventArgs e)
         {
-            txtSearch.Text = "";
+            txtSearch.Text
+                
+                = "";
         }
 
         //  ------------------------ DROP DOWN MENU ----------------------------------------
         private void cmbSemester_TextChanged(object sender, EventArgs e)
         {
-            dataCourseOfferings.Rows.Clear();
+            //DataTable sem = new DataTable();
             string fall = "Fall";
             string winter = "Winter";
 
-            string cID = "291";
-            string cName = "CMPT 291";
-            string date = "2023-09-03 To 2023-12-08";
-            string prof = "Dr. Stein";
+            //string cID = "291";
+            //string cName = "CMPT 291";
+            //string date = "2023-09-03 To 2023-12-08";
+            //string prof = "Dr. Stein";
+            DataTable dt = new DataTable();
+            myCommand.CommandText = "spViewClassesinSemester";
+            myCommand.Parameters.Clear();
+            myCommand.CommandType = CommandType.StoredProcedure;
 
 
             if (cmbSemester.Text.Equals(fall)) // FALL
@@ -72,17 +82,39 @@ namespace WindowsFormsApp1
                 lblTest.Text = fall;
 
                 // TO CREATE A NEW ROW AND ADD ITEMS TO EACH COL IN ROW  Add(col1Item, col2Item, .....)
-                dataCourseOfferings.Rows.Add(cID, cName, date, prof);
-                dataCourseOfferings.Rows.Add("391", "CMPT 391", "2023-09-03 To 2023-12-08", "Dr. Funk");
+                //dataCourseOfferings.Rows.Add(cID, cName, date, prof);
+                //dataCourseOfferings.Rows.Add("391", "CMPT 391", "2023-09-03 To 2023-12-08", "Dr. Funk");
+                myCommand.Parameters.AddWithValue("@semester", fall);
+                SqlDataReader reader = myCommand.ExecuteReader();
+                while (!reader.IsClosed)
+                {
+                    dt.Load(reader);
+                    dataCourseOfferings.DataSource = dt;
+                }
+
+
+
+
 
             } else if (cmbSemester.Text.Equals(winter)) // WINTER
             {
 
                 lblTest.Text = winter;
-                dataCourseOfferings.Rows.Add("391", "CMPT 391", "2024-01-03 To 2024-04-18", "Dr. Funk");
-                dataCourseOfferings.Rows.Add(cID, cName, "2024-01-03 To 2024-04-18", prof);
+                //dataCourseOfferings.Rows.Add("391", "CMPT 391", "2024-01-03 To 2024-04-18", "Dr. Funk");
+                //dataCourseOfferings.Rows.Add(cID, cName, "2024-01-03 To 2024-04-18", prof);
+                myCommand.Parameters.AddWithValue("@semester", winter);
+                SqlDataReader reader = myCommand.ExecuteReader();
+                while (!reader.IsClosed)
+                {
+                    dt.Load(reader);
+                    dataCourseOfferings.DataSource = dt;
+                }
 
             }
+
+
+
+
         }
 
         //  ------------------------ COURSE CLICKED ON ----------------------------------------
@@ -105,7 +137,7 @@ namespace WindowsFormsApp1
                     {
                         myCommand.CommandText = "spViewCourseSections";
                         myCommand.CommandType = CommandType.StoredProcedure;
-
+                        
                         myCommand.Parameters.Clear();
                         myCommand.Parameters.AddWithValue("@cID", courseID);
 
@@ -135,17 +167,29 @@ namespace WindowsFormsApp1
         private void btnSearch_Click(object sender, EventArgs e)
         {
             // SKELETON FOR SEARCHING WILL NEED A DIF ALGORITHM FOR WHEN NEEDING TO SEARCH DB
-            string[] cIDS = new string[] { "291", "391" }; // change to be course ids offered in sem
+            //string[] cIDS = new string[] { "291", "391" }; // change to be course ids offered in sem
             string search = txtSearch.Text;
-
-            foreach (string course in cIDS) // iterate through course list til match found
+            DataTable dt = new DataTable();
+            myCommand.CommandText = "spSearchCourseByCourseID";
+            myCommand.Parameters.Clear();
+            myCommand.CommandType = CommandType.StoredProcedure;
+            myCommand.Parameters.AddWithValue("@ID", search);
+            SqlDataReader reader = myCommand.ExecuteReader();
+            while (!reader.IsClosed)
             {
-                if (search.Equals(course)) // instead of .equal .startswith? .contains?
-                {
-                    dataCourseOfferings.Rows.Add("391", "CMPT 391", "2024-01-03 To 2024-04-18", "Dr. Funk");
-
-                }
+                dt.Load(reader);
+                dataCourseOfferings.DataSource = dt;
             }
+
+            //foreach (string course in cIDS) // iterate through course list til match found
+            //{
+            //if (search.Equals(course)) // instead of .equal .startswith? .contains?
+            //{
+            //   dataCourseOfferings.Rows.Add("391", "CMPT 391", "2024-01-03 To 2024-04-18", "Dr. Funk");
+
+            //}
+            //}
+
 
         }
 
@@ -188,7 +232,7 @@ namespace WindowsFormsApp1
         {
           
             // TODO: This line of code loads data into the 'cMPT391_1DataSet1.Section' table. You can move, or remove it, as needed.
-            this.sectionTableAdapter.Fill(this.cMPT391_1DataSet4.Section);
+            //this.sectionTableAdapter.Fill(this.cMPT391_1DataSet4.Section);
 
         }
 
@@ -208,9 +252,9 @@ namespace WindowsFormsApp1
         private void ClassSearch_Load_1(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'cMPT391_1DataSet41.Course' table. You can move, or remove it, as needed.
-            this.courseTableAdapter.Fill(this.cMPT391_1DataSet41.Course);
+            //this.courseTableAdapter.Fill(this.cMPT391_1DataSet41.Course);
             // TODO: This line of code loads data into the 'cMPT391_1DataSet4.Course' table. You can move, or remove it, as needed.
-            this.courseTableAdapter.Fill(this.cMPT391_1DataSet4.Course);
+            // this.courseTableAdapter.Fill(this.cMPT391_1DataSet4.Course);
 
         }
 
@@ -225,5 +269,9 @@ namespace WindowsFormsApp1
            
         }
 
+        private void dataCourseOfferings_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
