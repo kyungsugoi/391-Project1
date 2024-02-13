@@ -302,3 +302,23 @@ begin
 end
 
 EXECUTE spIndiviudalCourseInfo @cName = 'CMPT 201', @secName = 'AS02', @secType = 'Lecture', @secTID = 5;
+
+
+----- UPDATE 2/13:
+CREATE PROCEDURE spViewClassesinSemester
+@semester nvarchar(MAX)
+AS
+BEGIN
+SELECT DISTINCT C.courseID, C.courseName, C.credits, C.courseDescription FROM Course C,Section S
+WHERE S.courseID = C.courseID AND S.year>=YEAR(CURRENT_TIMESTAMP) AND S.semester = @semester
+END
+
+ALTER Procedure spSearchCourseByCourseID
+@ID nvarchar(20)
+as
+Begin
+	Select C.courseID, C.courseName, S.sectionID, S.sectionType, S.sectionSize, S.sectionSize, S.enrolled, ST.timeSlotID, I.instructorID
+	from Course C, Section S, SectionTimeSlot ST, Instructor I
+	where C.courseID = S.courseID AND S.sectionID = ST.sectionID AND S.instructorID = I.instructorID
+	AND C.courseID LIKE '%'+@ID+'%' 
+END
