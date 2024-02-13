@@ -24,7 +24,9 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             // localhost will default to your server, no need to hardcode it anymore
+            //String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
             String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+
             SqlConnection myConnection = new SqlConnection(connectionString);
 
             try
@@ -87,51 +89,46 @@ namespace WindowsFormsApp1
         private void dataCourseOfferings_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             lstCourses.Items.Clear();
-            string cellData = "";
-            string fullData = "";
-            int count = 0; // for skip first
+            string courseID = "";
 
             if (e.RowIndex >= 0) // Check if a valid row is clicked
             {
                 DataGridViewRow selectedRow = dataCourseOfferings.Rows[e.RowIndex];
 
-                // Iterate through cells in the selected row
-                foreach (DataGridViewCell cell in selectedRow.Cells)
+                // Assuming the first cell contains the course ID
+                if (selectedRow.Cells[0].Value != null)
                 {
-                    // Check if the cell value is not null before adding to the list and skip first
-                    if (cell.Value != null && count > 0)
+                    courseID = selectedRow.Cells[0].Value.ToString();
+
+                    // Execute stored procedure
+                    try
                     {
-                        cellData = cell.Value.ToString();
-                        fullData = fullData + " " + cellData;
-                        
+                        myCommand.CommandText = "spViewCourseSections";
+                        myCommand.CommandType = CommandType.StoredProcedure;
+
+                        myCommand.Parameters.Clear();
+                        myCommand.Parameters.AddWithValue("@cID", courseID);
+
+                        using (SqlDataReader reader = myCommand.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string courseName = reader["courseName"].ToString();
+                                string sectionName = reader["sectionName"].ToString();
+                                string sectionType = reader["sectionType"].ToString();
+                                string timeSlotID = reader["timeSlotID"].ToString();
+
+                                string result = $"{courseName} - {sectionName} - {sectionType} - {timeSlotID}";
+                                lstCourses.Items.Add(result);
+                            }
+                        }
                     }
-                    count++;
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.ToString(), "Error");
+                    }
                 }
-                lblTest.Text = fullData;
-                lstCourses.Items.Add(fullData);
             }
-
-
-            if (cellData.Equals("291"))
-            {
-
-                lstCourses.Items.Add("291, CMPT 291, 9:30 - 10:20, Dr. Funk");
-                lstCourses.Items.Add("291, CMPT 291, 10:30 - 11:20, Dr. Funk");
-                lstCourses.Items.Add("291, CMPT 291, 11:30 - 12:20, Dr. Funk");
-                lstCourses.Items.Add("291, CMPT 291, 12:30 - 1:20, Dr. Funk");
-
-            } else if (cellData.Equals("391"))
-            {
-
-                lstCourses.Items.Add("391, CMPT 391, 9:30 - 10:20, Dr. Stein");
-                lstCourses.Items.Add("391, CMPT 391, 10:30 - 11:20, Dr. Stein");
-                lstCourses.Items.Add("391, CMPT 391, 11:30 - 12:20, Dr. Stein");
-                lstCourses.Items.Add("391, CMPT 391, 12:30 - 1:20, Dr. Stein");
-
-            }
-
-            // when cell selected, iterate through db using selected params, and add to listbox
-
         }
 
         //  ------------------------ SEARCH ----------------------------------------
