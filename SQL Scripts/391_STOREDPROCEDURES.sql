@@ -11,18 +11,20 @@ END;
 EXECUTE spViewStudent @studentID=1;
 
 -- SP to add student
-CREATE PROCEDURE spAddStudent
+-- YEJI: It wouldn't add a student unless studentID is given, so I added studentID field
+ALTER PROCEDURE spAddStudent
+@studentID numeric(18, 0),
 @firstName varchar(MAX),
 @lastName varchar(MAX),
 @activeStudent bit,
 @password nvarchar(50)
 AS
 BEGIN
-    INSERT INTO Student(firstName, lastName, activeStudent, password)
-    VALUES (@firstName, @lastName, @activeStudent, @password)
+    INSERT INTO Student(studentID, firstName, lastName, activeStudent, password)
+    VALUES (@studentID, @firstName, @lastName, @activeStudent, @password)
 END;
 
-EXECUTE spAddStudent @firstName='Michael', @lastName='Sin', @activeStudent=1, @password='12ab';
+EXECUTE spAddStudent @studentID=11, @firstName='Michael', @lastName='Sin', @activeStudent=1, @password='12ab';
 
 -- SP to get total amount of student credits
 CREATE PROCEDURE spStudentCredits
@@ -40,11 +42,12 @@ END;
 EXECUTE spStudentCredits @studentID=1;
 
 -- SP get all course list of student
+-- YEJI: updated select fields
 CREATE PROCEDURE spStudentCourses 
 @studentID int
 AS
 BEGIN
-    SELECT C.courseName, C.courseDescription, C.credits, SE.sectionName, SE.sectionType, SE.semester, SE.year
+    SELECT C.courseID, C.courseName, C.credits, SE.sectionName, SE.sectionType, SE.semester, SE.year
     FROM   Student AS S, Takes AS T, Section AS SE, Course as C
     WHERE S.studentID=@studentID
       AND S.studentID=T.studentID
@@ -61,7 +64,7 @@ CREATE PROCEDURE spStudentCoursesByYear
 @year numeric(4,0)
 AS
 BEGIN
-    SELECT C.courseName, C.courseDescription, C.credits, SE.sectionName, SE.sectionType, SE.semester, SE.year
+    SELECT C.courseID, C.courseName, C.credits, SE.sectionName, SE.sectionType, SE.semester, SE.year
     FROM   Student AS S, Takes AS T, Section AS SE, Course as C
     WHERE S.studentID=@studentID
       AND SE.semester=@semester
@@ -97,11 +100,11 @@ END
 EXECUTE spDeleteStudent @studentID=11;
 
 -- SP to get count of students enrolled as well as space left in section
-ALTER PROCEDURE spSectionEnrolled
+CREATE PROCEDURE spSectionEnrolled
 @sectionID int
 AS
 BEGIN
-    SELECT C.courseName, SE.enrolled, (SE.sectionSize-SE.enrolled) AS SpaceLeft
+    SELECT C.courseID, SE.enrolled, (SE.sectionSize-SE.enrolled) AS SpaceLeft
     FROM Section AS SE, Course AS C
     WHERE sectionID=@sectionID
       AND SE.courseID=C.courseID
@@ -127,7 +130,7 @@ CREATE PROCEDURE spStudentCourseSchedule
 @studentID int
 AS
 BEGIN
-    SELECT C.courseName, SE.semester, SE.year, TS.day, TS.startTime, TS.endTime
+    SELECT C.courseID, SE.semester, SE.year, TS.day, TS.startTime, TS.endTime
     FROM Student AS S, Takes AS T, Section AS SE, TimeSlot as TS, SectionTimeslot as STS, course AS C
     WHERE S.studentID=@studentID
       AND SE.courseID=C.courseID
@@ -167,7 +170,7 @@ EXECUTE spHistoricalStudentCount
 
 
 -- GPA of student
-ALTER PROCEDURE spStudentGPA
+CREATE PROCEDURE spStudentGPA
 @studentID int
 AS
 BEGIN
@@ -180,3 +183,38 @@ BEGIN
 END;
 
 EXECUTE spStudentGPA @studentID=1;
+
+CREATE Procedure spSearchCourseByCourseID
+@ID nvarchar(50)
+as
+Begin
+Select C.courseID, C.courseName, S.sectionName, S.sectionType, S.semester, S.year, S.sectionSize, S.enrolled, I.lastName
+from Course C, Section S, Instructor I
+where C.courseID = S.courseID AND S.instructorID = I.instructorID AND C.courseID LIKE '%'+@ID+'%'
+End
+
+EXEC spSearchCourseByCourseID 'cmpt'
+
+CREATE Procedure spSearchCourseByCourseName
+@name nvarchar(50)
+as
+Begin
+Select C.courseID, C.courseName, S.sectionName, S.sectionType, S.semester, S.year, S.sectionSize, S.enrolled, I.lastName
+from Course C, Section S, Instructor I
+where C.courseID = S.courseID AND S.instructorID = I.instructorID AND C.courseName LIKE '%'+@name+'%'
+End
+
+EXEC spSearchCourseByCourseName 'intro'
+
+
+CREATE Procedure spSearchCourseByDepartment
+@dept nvarchar(50)
+as
+Begin
+Select C.courseID, C.courseName, S.sectionName, S.sectionType, S.semester, S.year, S.sectionSize, S.enrolled, I.lastName
+from Course C, Section S, Instructor I, Department D
+where C.courseID = S.courseID AND S.instructorID = I.instructorID  AND C.departmentID = D.departmentID
+AND D.departmentName LIKE '%'+@dept+'%'
+End
+
+EXEC spSearchCourseByDepartment 'computer'
