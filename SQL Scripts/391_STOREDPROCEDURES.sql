@@ -180,3 +180,59 @@ BEGIN
 END;
 
 EXECUTE spStudentGPA @studentID=1;
+
+
+--  ####################### LOGIN STORED PROCEDURE  #####################################
+create procedure spLogin
+(
+@username varchar(max),
+@password nvarchar(50)
+)
+
+as 
+begin
+	select firstName, password 
+		from Student
+			where firstName = @username and password = @password
+end
+
+--  ####################### VIEW ALL SECTIONS FOR COURSE WHEN CLICKED ON IN PROGRAM  #####################################
+
+create procedure spViewCourseSections
+(
+@cID numeric(18, 0)
+)
+
+as
+begin
+
+	select courseName, sectionName, sectionType, timeSlotID
+		from Course C, Section S, SectionTimeSlot STS
+			where C.courseID = @cID and S.courseID = @cID and S.sectionID = STS.sectionID
+
+end
+
+
+EXECUTE spViewCourseSections @cID = 1;
+
+
+
+
+--  ####################### GET INDIVIDUAL COURSE DATA  #####################################
+
+create procedure spIndiviudalCourseInfo 
+(
+@cName varchar(max),
+@secName varchar(max),
+@secType varchar(max),
+@secTID numeric(18, 0)
+)
+as
+begin
+	select courseName, sectionType, timeSlotID, firstName, lastName
+		from Course C, Section S, SectionTimeSlot STS, Instructor I
+			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.timeSlotID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID
+
+end
+
+EXECUTE spIndiviudalCourseInfo @cName = 'CMPT 201', @secName = 'AS02', @secType = 'Lecture', @secTID = 5;
