@@ -23,8 +23,10 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             // localhost will default to your server, no need to hardcode it anymore
+            //string connectionString = "Server=DESKTOP-5HTNF3D\\SQLEXPRESS;Database=CMPT391_1;Trusted_Connection=yes;";
             String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
-            SqlConnection myConnection = new SqlConnection(connectionString);
+
+            myConnection = new SqlConnection(connectionString);
 
             try
             {
@@ -36,43 +38,45 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show(e.ToString(), "Error");
                 this.Close();
-
             }
         }
 
-      
-
-        //  ------------------------ BUTTON CLICK ----------------------------------------
+        // BUTTON CLICK
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            int UserCheck = 0;
-            myCommand.CommandText = "select * from Student";
+            myCommand.Parameters.Clear(); // EVERY ADD WILL FOREVER BE STORED, SO ALWAYS CLEAR FIRST BEFORE ADDING MORE 
+            int userCheck = 0;
+            string user = txtUsername.Text.ToString();
+            string pass = txtPassword.Text.ToString();
+
 
             try
             {
+                myCommand.CommandText = "spLogin"; // Assuming your stored procedure name is spLogin
+                myCommand.CommandType = CommandType.StoredProcedure;
+
+                // Add parameters to the SqlCommand
+                myCommand.Parameters.AddWithValue("@username", user);
+                myCommand.Parameters.AddWithValue("@password", pass);
+
                 myReader = myCommand.ExecuteReader();
 
                 while (myReader.Read())
                 {
-                    if (myReader["firstName"].ToString().Trim() == txtUsername.Text)
-                    {
-                        if (myReader["password"].ToString().Trim() == txtPassword.Text)
-                        {
-                            UserCheck = 1;
-                            break;
-                        }
-                    }
+                    userCheck = 1;
+                    break;
                 }
 
-                if (UserCheck == 1)
+                if (userCheck == 1)
                 {
                     ClassSearch classSearch = new ClassSearch();
                     classSearch.Show();
                     this.Hide();
-
                 }
-
-                else MessageBox.Show("Username or Password Invalid");
+                else
+                {
+                    MessageBox.Show("Username or Password Invalid");
+                }
 
                 myReader.Close();
             }
@@ -80,7 +84,6 @@ namespace WindowsFormsApp1
             {
                 MessageBox.Show(e3.ToString(), "Error");
             }
-
         }
     }
 }

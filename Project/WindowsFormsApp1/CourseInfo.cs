@@ -7,15 +7,39 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
+using System.Xml;
+
 
 namespace WindowsFormsApp1
 {
     public partial class CourseInfo : Form
     {
+        public SqlConnection myConnection;
+        public SqlCommand myCommand;
+        public SqlDataReader myReader;
         public string sendData { get; set; }
         public CourseInfo()
         {
             InitializeComponent();
+
+            // localhost will default to your server, no need to hardcode it anymore
+            String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+            SqlConnection myConnection = new SqlConnection(connectionString);
+
+            try
+            {
+                myConnection.Open();
+                myCommand = new SqlCommand();
+                myCommand.Connection = myConnection;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+                this.Close();
+
+            }
+
         }
 
 
@@ -32,33 +56,78 @@ namespace WindowsFormsApp1
         private void CourseInfo_Load(object sender, EventArgs e)
         {
             string recString = ClassSearch.sendCourse;
-            string[] info = recString.Split(',');
+            string[] info = recString.Split('-');
             int count = 0;
 
-            foreach(string word in info)
+            string cName = "";
+            string secName = "";
+            string secType = "";
+            string secTID = "";
+
+            foreach (string word in info)
             {
                 if (count == 0)
                 {
-                    txtID.Text = word;
+                    cName = word.Trim();
 
                 } else if (count == 1)
                 {
-                    txtName.Text = word;
+                    secName = word.Trim();
 
                 }
                 else if (count == 2)
                 {
-                    txtTime.Text = word;
+                    secType = word.Trim();
 
                 }
                 else if (count == 3)
                 {
-                    txtTeach.Text = word;
+                    secTID = word.Trim();
                 }
 
 
                 count++;
             }
+
+
+            // Execute stored procedure
+            try
+            {
+                myCommand.CommandText = "spIndiviudalCourseInfo";
+                myCommand.CommandType = CommandType.StoredProcedure;
+
+                myCommand.Parameters.Clear();
+                myCommand.Parameters.AddWithValue("@cName", cName);
+                myCommand.Parameters.AddWithValue("@secName", secName);
+                myCommand.Parameters.AddWithValue("@secType", secType);
+                myCommand.Parameters.AddWithValue("@secTID", secTID);
+
+                using (SqlDataReader reader = myCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string courseName = reader["courseName"].ToString();
+                        txtID.Text = courseName;
+                        string sectionType = reader["sectionType"].ToString();
+                        txtName.Text = sectionType;
+                        string timeSlotID = reader["timeSlotID"].ToString();
+                        txtTime.Text = timeSlotID;
+                        string fName = reader["firstName"].ToString();
+                        string lName = reader["lastName"].ToString();
+                        string fullName = fName + " " + lName;
+                        txtTeach.Text = fullName;
+
+
+                        string result = $"{courseName} - {secName} - {sectionType} - {timeSlotID} - {fullName}";
+                        sendData = result;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+
 
         }
     }
