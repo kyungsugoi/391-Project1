@@ -46,7 +46,7 @@ namespace WindowsFormsApp1
         {
             myCommand.Parameters.Clear(); // EVERY ADD WILL FOREVER BE STORED, SO ALWAYS CLEAR FIRST BEFORE ADDING MORE 
             int userCheck = 0;
-            string user = txtUsername.Text.ToString();
+            string studentID = txtUsername.Text.ToString();
             string pass = txtPassword.Text.ToString();
 
 
@@ -56,7 +56,7 @@ namespace WindowsFormsApp1
                 myCommand.CommandType = CommandType.StoredProcedure;
 
                 // Add parameters to the SqlCommand
-                myCommand.Parameters.AddWithValue("@username", user);
+                myCommand.Parameters.AddWithValue("@studentID", studentID);
                 myCommand.Parameters.AddWithValue("@password", pass);
 
                 myReader = myCommand.ExecuteReader();

@@ -41,7 +41,7 @@ EXECUTE spViewStudent @studentID=1;
 
 -- SP to add student
 -- YEJI: It wouldn't add a student unless studentID is given, so I added studentID field
-ALTER PROCEDURE spAddStudent
+CREATE PROCEDURE spAddStudent
 @studentID numeric(18, 0),
 @firstName varchar(MAX),
 @lastName varchar(MAX),
@@ -249,17 +249,17 @@ End
 EXEC spSearchCourseByDepartment 'computer'
 
 --  ####################### LOGIN STORED PROCEDURE  #####################################
-create procedure spLogin
+alter procedure spLogin
 (
-@username varchar(max),
+@studentID numeric(18, 0),
 @password nvarchar(50)
 )
 
 as 
 begin
-	select firstName, password 
+	select studentID, password 
 		from Student
-			where firstName = @username and password = @password
+			where studentID = @studentID and password = @password
 end
 
 --  ####################### VIEW ALL SECTIONS FOR COURSE WHEN CLICKED ON IN PROGRAM  #####################################
@@ -311,14 +311,4 @@ AS
 BEGIN
 SELECT DISTINCT C.courseID, C.courseName, C.credits, C.courseDescription FROM Course C,Section S
 WHERE S.courseID = C.courseID AND S.year>=YEAR(CURRENT_TIMESTAMP) AND S.semester = @semester
-END
-
-ALTER Procedure spSearchCourseByCourseID
-@ID nvarchar(20)
-as
-Begin
-	Select C.courseID, C.courseName, S.sectionID, S.sectionType, S.sectionSize, S.sectionSize, S.enrolled, ST.timeSlotID, I.instructorID
-	from Course C, Section S, SectionTimeSlot ST, Instructor I
-	where C.courseID = S.courseID AND S.sectionID = ST.sectionID AND S.instructorID = I.instructorID
-	AND C.courseID LIKE '%'+@ID+'%' 
 END
