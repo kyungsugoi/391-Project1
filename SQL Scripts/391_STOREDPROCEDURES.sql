@@ -8,8 +8,16 @@ BEGIN
 	BEGIN TRY
 		BEGIN TRANSACTION
 			
+			IF NOT EXISTS 
+			(select STS.timeSlotID
+			from Takes T, Section SE, SectionTimeSlot STS
+			where T.sectionID=SE.sectionID AND SE.sectionID=STS.sectionID 
+			AND T.studentID=@studentID)
+
+			Begin
 			INSERT INTO Takes(studentID, sectionID) Values(@studentID, @sectionID)
 			UPDATE Section set enrolled += 1 where Section.sectionID = @sectionID
+			End
 
 		Commit TRANSACTION
 	END TRY
