@@ -172,15 +172,25 @@ REFERENCES [dbo].[Department] ([departmentID])
 GO
 ALTER TABLE [dbo].[Course] CHECK CONSTRAINT [FK_Course_Department_departmentID]
 GO
-ALTER TABLE [dbo].[Department]  WITH CHECK ADD  CONSTRAINT [FK_Department_Department_departmentHeadID] FOREIGN KEY([departmentHeadID])
+ALTER TABLE [dbo].[Department]  WITH CHECK ADD  CONSTRAINT [FK_Department_Instructor_departmentHeadID] FOREIGN KEY([departmentHeadID])
 REFERENCES [dbo].[Instructor] ([instructorID])
 GO
-ALTER TABLE [dbo].[Department] CHECK CONSTRAINT [FK_Department_Department_departmentHeadID]
+ALTER TABLE [dbo].[Department] CHECK CONSTRAINT [FK_Department_Instructor_departmentHeadID]
 GO
 ALTER TABLE [dbo].[Instructor]  WITH CHECK ADD  CONSTRAINT [FK_Instructor_Department_departmentID] FOREIGN KEY([departmentID])
 REFERENCES [dbo].[Department] ([departmentID])
 GO
 ALTER TABLE [dbo].[Instructor] CHECK CONSTRAINT [FK_Instructor_Department_departmentID]
+GO
+ALTER TABLE [dbo].[Prereq]  WITH CHECK ADD  CONSTRAINT [FK_Prereq_Course_courseID] FOREIGN KEY([courseID])
+REFERENCES [dbo].[Course] ([courseID])
+GO
+ALTER TABLE [dbo].[Prereq] CHECK CONSTRAINT [FK_Prereq_Course_courseID]
+GO
+ALTER TABLE [dbo].[Prereq]  WITH CHECK ADD  CONSTRAINT [FK_Prereq_Course_prereqID] FOREIGN KEY([prereqID])
+REFERENCES [dbo].[Course] ([courseID])
+GO
+ALTER TABLE [dbo].[Prereq] CHECK CONSTRAINT [FK_Prereq_Course_prereqID]
 GO
 ALTER TABLE [dbo].[Section]  WITH CHECK ADD  CONSTRAINT [FK_Section_Classroom_classroomID] FOREIGN KEY([classroomID])
 REFERENCES [dbo].[Classroom] ([classroomID])
