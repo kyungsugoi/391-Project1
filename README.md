@@ -15,4 +15,6 @@ If you already have tables created, you must first `DROP` them all and `CREATE` 
 3. Run [391_INSERT.sql](SQL%20Scripts/391_INSERT.sql)
 
 ## Big Database
-If you want to try the database filled with more data, run [391_INSERT_BIG.sql](SQL%20Scripts/391_INSERT_BIG.sql) instead of [391_INSERT.sql](SQL%20Scripts/391_INSERT.sql)
+If you want to try the database filled with more data, run [391_INSERT_BIG.sql](SQL%20Scripts/391_INSERT_BIG.sql) instead of [391_INSERT.sql](SQL%20Scripts/391_INSERT.sql).
+
+Note that it may take a minute or two to insert everything.
