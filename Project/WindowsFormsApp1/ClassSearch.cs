@@ -382,7 +382,7 @@ namespace WindowsFormsApp1
             }
             else
             {
-                MessageBox.Show("Please select an item to remove.", "No Item Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Please select an item to enroll.", "No Item Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

@@ -100,7 +100,7 @@
             this.tabClasses.Location = new System.Drawing.Point(12, 12);
             this.tabClasses.Name = "tabClasses";
             this.tabClasses.SelectedIndex = 0;
-            this.tabClasses.Size = new System.Drawing.Size(1102, 526);
+            this.tabClasses.Size = new System.Drawing.Size(1285, 526);
             this.tabClasses.TabIndex = 0;
             this.tabClasses.SelectedIndexChanged += new System.EventHandler(this.tabClasses_SelectedIndexChanged);
             // 
@@ -115,16 +115,16 @@
             this.tabCourse.Location = new System.Drawing.Point(4, 22);
             this.tabCourse.Name = "tabCourse";
             this.tabCourse.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCourse.Size = new System.Drawing.Size(1094, 500);
+            this.tabCourse.Size = new System.Drawing.Size(1277, 500);
             this.tabCourse.TabIndex = 0;
             this.tabCourse.Text = "Class Search";
             this.tabCourse.UseVisualStyleBackColor = true;
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(892, 61);
+            this.btnSearch.Location = new System.Drawing.Point(748, 61);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(196, 21);
+            this.btnSearch.Size = new System.Drawing.Size(122, 21);
             this.btnSearch.TabIndex = 16;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -145,7 +145,7 @@
             this.lstCourses.FormattingEnabled = true;
             this.lstCourses.Location = new System.Drawing.Point(748, 98);
             this.lstCourses.Name = "lstCourses";
-            this.lstCourses.Size = new System.Drawing.Size(340, 381);
+            this.lstCourses.Size = new System.Drawing.Size(523, 381);
             this.lstCourses.TabIndex = 14;
             this.lstCourses.SelectedIndexChanged += new System.EventHandler(this.lstCourses_SelectedIndexChanged);
             // 
@@ -205,7 +205,7 @@
             // 
             this.txtSearch.Location = new System.Drawing.Point(6, 62);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(880, 20);
+            this.txtSearch.Size = new System.Drawing.Size(736, 20);
             this.txtSearch.TabIndex = 11;
             this.txtSearch.Text = "Search";
             this.txtSearch.Click += new System.EventHandler(this.txtSearch_Click);
@@ -221,7 +221,7 @@
             this.tabCart.Location = new System.Drawing.Point(4, 22);
             this.tabCart.Name = "tabCart";
             this.tabCart.Padding = new System.Windows.Forms.Padding(3);
-            this.tabCart.Size = new System.Drawing.Size(1094, 500);
+            this.tabCart.Size = new System.Drawing.Size(1277, 500);
             this.tabCart.TabIndex = 1;
             this.tabCart.Text = "Shopping Cart";
             this.tabCart.UseVisualStyleBackColor = true;
@@ -229,7 +229,7 @@
             // btnEnrollAll
             // 
             this.btnEnrollAll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.btnEnrollAll.Location = new System.Drawing.Point(963, 427);
+            this.btnEnrollAll.Location = new System.Drawing.Point(1146, 427);
             this.btnEnrollAll.Name = "btnEnrollAll";
             this.btnEnrollAll.Size = new System.Drawing.Size(125, 67);
             this.btnEnrollAll.TabIndex = 12;
@@ -261,7 +261,7 @@
             // btnEnroll
             // 
             this.btnEnroll.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnEnroll.Location = new System.Drawing.Point(832, 427);
+            this.btnEnroll.Location = new System.Drawing.Point(1015, 427);
             this.btnEnroll.Name = "btnEnroll";
             this.btnEnroll.Size = new System.Drawing.Size(125, 67);
             this.btnEnroll.TabIndex = 9;
@@ -276,7 +276,7 @@
             this.lstClassBox.ItemHeight = 31;
             this.lstClassBox.Location = new System.Drawing.Point(6, 79);
             this.lstClassBox.Name = "lstClassBox";
-            this.lstClassBox.Size = new System.Drawing.Size(1082, 345);
+            this.lstClassBox.Size = new System.Drawing.Size(1265, 345);
             this.lstClassBox.TabIndex = 8;
             // 
             // tabHistory
@@ -285,7 +285,7 @@
             this.tabHistory.Controls.Add(this.dataHistory);
             this.tabHistory.Location = new System.Drawing.Point(4, 22);
             this.tabHistory.Name = "tabHistory";
-            this.tabHistory.Size = new System.Drawing.Size(1094, 500);
+            this.tabHistory.Size = new System.Drawing.Size(1277, 500);
             this.tabHistory.TabIndex = 2;
             this.tabHistory.Text = "Course History";
             this.tabHistory.UseVisualStyleBackColor = true;
@@ -317,7 +317,7 @@
             this.dataHistory.Name = "dataHistory";
             this.dataHistory.ReadOnly = true;
             this.dataHistory.RowHeadersWidth = 51;
-            this.dataHistory.Size = new System.Drawing.Size(1047, 412);
+            this.dataHistory.Size = new System.Drawing.Size(1222, 412);
             this.dataHistory.TabIndex = 0;
             // 
             // CourseID
@@ -455,7 +455,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LavenderBlush;
-            this.ClientSize = new System.Drawing.Size(1126, 549);
+            this.ClientSize = new System.Drawing.Size(1309, 549);
             this.Controls.Add(this.tabClasses);
             this.Name = "ClassSearch";
             this.Text = "Classes";
