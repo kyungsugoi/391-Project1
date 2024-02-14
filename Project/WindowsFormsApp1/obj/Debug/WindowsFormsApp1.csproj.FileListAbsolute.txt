@@ -11,6 +11,7 @@ C:\Users\kelse\OneDrive\Documents\GitHub\391-Project1\Project\WindowsFormsApp1\o
 C:\Users\kelse\OneDrive\Documents\GitHub\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\kelse\OneDrive\Documents\GitHub\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\kelse\OneDrive\Documents\GitHub\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+<<<<<<< HEAD
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
@@ -25,6 +26,8 @@ C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsF
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+=======
+>>>>>>> 815d35f5f221e2a4719d61d068668b7f1d929ecf
 C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
 C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
 C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb

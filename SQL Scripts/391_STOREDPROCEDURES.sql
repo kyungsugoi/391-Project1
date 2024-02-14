@@ -41,7 +41,7 @@ EXECUTE spViewStudent @studentID=1;
 
 -- SP to add student
 -- YEJI: It wouldn't add a student unless studentID is given, so I added studentID field
-ALTER PROCEDURE spAddStudent
+CREATE PROCEDURE spAddStudent
 @studentID numeric(18, 0),
 @firstName varchar(MAX),
 @lastName varchar(MAX),
@@ -257,8 +257,13 @@ alter procedure spLogin
 as 
 begin
 	select studentID, password 
+<<<<<<< HEAD
 	from Student
 	where studentID = @studentID and password = @password
+=======
+		from Student
+			where studentID = @studentID and password = @password
+>>>>>>> 815d35f5f221e2a4719d61d068668b7f1d929ecf
 end
 
 --  ####################### VIEW ALL SECTIONS FOR COURSE WHEN CLICKED ON IN PROGRAM  #####################################
@@ -324,6 +329,7 @@ AS
 BEGIN
 SELECT DISTINCT C.courseID, C.courseName, C.credits, C.courseDescription FROM Course C,Section S
 WHERE S.courseID = C.courseID AND S.year>=YEAR(CURRENT_TIMESTAMP) AND S.semester = @semester
+<<<<<<< HEAD
 END
 
 CREATE Procedure spSearchCourseByCourseID
@@ -346,3 +352,6 @@ WHERE activeStudent='true';
 DROP VIEW vWActiveStudents;
 
 SELECT * FROM vWActiveStudents;
+=======
+END
+>>>>>>> 815d35f5f221e2a4719d61d068668b7f1d929ecf

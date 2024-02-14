@@ -46,7 +46,7 @@ namespace WindowsFormsApp1
         {
             myCommand.Parameters.Clear(); // EVERY ADD WILL FOREVER BE STORED, SO ALWAYS CLEAR FIRST BEFORE ADDING MORE 
             int userCheck = 0;
-            string user = txtUsername.Text.ToString();
+            string studentID = txtUsername.Text.ToString();
             string pass = txtPassword.Text.ToString();
 
 
