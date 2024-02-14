@@ -20,13 +20,14 @@ namespace WindowsFormsApp1
         public SqlDataReader myReader;
         public static string sendCourse = "";
         public static string recString = "";
+        public string studentID;
         public ClassSearch()
         {
             InitializeComponent();
 
             // localhost will default to your server, no need to hardcode it anymore
-            //String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
-            String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+            String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
+            //String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
 
             SqlConnection myConnection = new SqlConnection(connectionString);
 
@@ -45,11 +46,6 @@ namespace WindowsFormsApp1
 
             this.FormClosing += YourForm_FormClosing;
 
-           
-            SqlDataAdapter adpt = new SqlDataAdapter("Select * from course", myConnection);
-            DataTable dt = new DataTable();
-            adpt.Fill(dt);
-            dataCourseOfferings.DataSource = dt;
         }
 
         //  ------------------------ BUTTON CLICK ----------------------------------------
@@ -131,6 +127,7 @@ namespace WindowsFormsApp1
                 if (selectedRow.Cells[0].Value != null)
                 {
                     courseID = selectedRow.Cells[0].Value.ToString();
+                    lblTest.Text = courseID;
 
                     // Execute stored procedure
                     try
@@ -148,9 +145,11 @@ namespace WindowsFormsApp1
                                 string courseName = reader["courseName"].ToString();
                                 string sectionName = reader["sectionName"].ToString();
                                 string sectionType = reader["sectionType"].ToString();
-                                string timeSlotID = reader["timeSlotID"].ToString();
+                                string time = reader["day"].ToString() + " " + reader["startTime"].ToString() + " : " + reader["endTime"].ToString();
+                                string secID = reader["sectionID"].ToString();
 
-                                string result = $"{courseName} - {sectionName} - {sectionType} - {timeSlotID}";
+
+                                string result = $"{courseName} - {sectionName} - {sectionType} - {secID}  - {time}";
                                 lstCourses.Items.Add(result);
                             }
                         }
@@ -199,12 +198,38 @@ namespace WindowsFormsApp1
             dataHistory.Rows.Clear();
             if (tabClasses.SelectedTab.Text.Equals("Course History"))
             {
-                dataHistory.Rows.Add("291", "CMPT 291", "Dr. Funk", "3", "Fall", "2022");
-                dataHistory.Rows.Add("291", "CMPT 291", "Dr. Funk", "3", "Fall", "2022");
-                dataHistory.Rows.Add("291", "CMPT 291", "Dr. Funk", "3", "Fall", "2022");
-                dataHistory.Rows.Add("291", "CMPT 291", "Dr. Funk", "3", "Fall", "2022");
-                dataHistory.Rows.Add("291", "CMPT 291", "Dr. Funk", "3", "Fall", "2022");
-                dataHistory.Rows.Add("291", "CMPT 291", "Dr. Funk", "3", "Fall", "2022");
+                // Execute stored procedure
+                try
+                {
+                    myCommand.CommandText = "spStudentCourses";
+                    myCommand.CommandType = CommandType.StoredProcedure;
+
+                    myCommand.Parameters.Clear();
+                    myCommand.Parameters.AddWithValue("@studentID", int.Parse(studentID));
+
+                    using (SqlDataReader reader = myCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string courseID = reader["courseID"].ToString();
+                            string courseName = reader["courseName"].ToString();
+                            string credits = reader["credits"].ToString();
+                            string section = reader["sectionName"].ToString();
+                            string sectionType = reader["sectionType"].ToString();
+                            string semes = reader["semester"].ToString();
+                            string year = reader["year"].ToString();
+
+
+
+                            dataHistory.Rows.Add(courseID, courseName, credits, section, sectionType, semes, year);
+
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString(), "Error");
+                }
             }
         }
 
@@ -256,6 +281,36 @@ namespace WindowsFormsApp1
             // TODO: This line of code loads data into the 'cMPT391_1DataSet4.Course' table. You can move, or remove it, as needed.
             // this.courseTableAdapter.Fill(this.cMPT391_1DataSet4.Course);
 
+            studentID = Login.studentID;
+            //txtSearch.Text = studentID;
+            // Execute stored procedure
+            try
+            {
+                myCommand.CommandText = "spAllCourses";
+                myCommand.CommandType = CommandType.StoredProcedure;
+
+                myCommand.Parameters.Clear();
+
+                using (SqlDataReader reader = myCommand.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string courseID = reader["courseID"].ToString();
+                        string courseName = reader["courseName"].ToString();
+                        string courseDesc = reader["courseDescription"].ToString();
+                        string credits = reader["credits"].ToString();
+
+
+                        dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error");
+            }
+
+
         }
 
 
@@ -272,6 +327,41 @@ namespace WindowsFormsApp1
         private void dataCourseOfferings_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+
+
+        //  ------------------------ SHOPPING CART ----------------------------------------
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+
+            // Check if an item is selected in the ListBox
+            if (lstClassBox.SelectedIndex != -1)
+            {
+                // Remove the selected item
+                lstClassBox.Items.RemoveAt(lstClassBox.SelectedIndex);
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to remove.", "No Item Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void btnEnroll_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnEnrollAll_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            lstClassBox.Items.Clear();
         }
     }
 }
