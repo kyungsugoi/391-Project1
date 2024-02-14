@@ -195,7 +195,7 @@ namespace WindowsFormsApp1
                 else
                 {
                     // Inform the user that no data matching the search parameters was found
-                    MessageBox.Show("No classes matching the search parameters was found, please ensure correct course ID is searched.");
+                    MessageBox.Show("No classes matching the search was found, please ensure correct semester and/or course ID.");
                 }
             }
         }
