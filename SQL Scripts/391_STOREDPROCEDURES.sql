@@ -249,24 +249,24 @@ End
 EXEC spSearchCourseByDepartment 'computer'
 
 --  ####################### LOGIN STORED PROCEDURE  #####################################
-create procedure spLogin
+ALTER procedure spLogin
 (
-@username varchar(max),
+@stuID numeric(18, 0),
 @password nvarchar(50)
 )
 
 as 
 begin
-	select firstName, password 
+	select studentID, password 
 		from Student
-			where firstName = @username and password = @password
+			where studentID = @stuID and password = @password
 end
 
 --  ####################### VIEW ALL SECTIONS FOR COURSE WHEN CLICKED ON IN PROGRAM  #####################################
 
 ALTER procedure spViewCourseSections
 (
-@cID numeric(18, 0)
+@cID char(7)
 )
 
 as
@@ -279,7 +279,7 @@ begin
 end
 
 
-EXECUTE spViewCourseSections @cID = 1;
+EXECUTE spViewCourseSections @cID = 'CMPT101';
 
 
 
@@ -302,17 +302,17 @@ ALTER procedure spIndiviudalCourseInfo
 @cName varchar(max),
 @secName varchar(max),
 @secType varchar(max),
-@secTID numeric(18, 0)
+@secTID numeric(18, 0) -- sec id
 )
 as
 begin
 	select courseName, sectionType, STS.timeSlotID, firstName, lastName, day, startTime, endTime 
 		from Course C, Section S, SectionTimeSlot STS, Instructor I, TimeSlot T
-			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.timeSlotID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID and T.timeSlotID = S.sectionID
+			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.sectionID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID and T.timeSlotID = STS.timeSlotID
 
 end
 
-EXECUTE spIndiviudalCourseInfo @cName = 'CMPT 201', @secName = 'AS02', @secType = 'Lecture', @secTID = 5;
+EXECUTE spIndiviudalCourseInfo @cName = 'Practical Programming Methodology', @secName = 'SE01', @secType = 'Seminar', @secTID = 89;
 
 
 ----- UPDATE 2/13:
