@@ -41,7 +41,7 @@ EXECUTE spViewStudent @studentID=1;
 
 -- SP to add student
 -- YEJI: It wouldn't add a student unless studentID is given, so I added studentID field
-ALTER PROCEDURE spAddStudent
+CREATE PROCEDURE spAddStudent
 @studentID numeric(18, 0),
 @firstName varchar(MAX),
 @lastName varchar(MAX),
@@ -213,17 +213,6 @@ END;
 
 EXECUTE spStudentGPA @studentID=1;
 
-CREATE Procedure spSearchCourseByCourseID
-@ID nvarchar(50)
-as
-Begin
-Select C.courseID, C.courseName, S.sectionName, S.sectionType, S.semester, S.year, S.sectionSize, S.enrolled, I.lastName
-from Course C, Section S, Instructor I
-where C.courseID = S.courseID AND S.instructorID = I.instructorID AND C.courseID LIKE '%'+@ID+'%'
-End
-
-EXEC spSearchCourseByCourseID 'cmpt'
-
 CREATE Procedure spSearchCourseByCourseName
 @name nvarchar(50)
 as
@@ -249,59 +238,70 @@ End
 EXEC spSearchCourseByDepartment 'computer'
 
 --  ####################### LOGIN STORED PROCEDURE  #####################################
-create procedure spLogin
+CREATE procedure spLogin
 (
-@username varchar(max),
+@stuID numeric(18, 0),
 @password nvarchar(50)
 )
 
 as 
 begin
-	select firstName, password 
+	select studentID, password 
 		from Student
-			where firstName = @username and password = @password
+			where studentID = @stuID and password = @password
 end
 
 --  ####################### VIEW ALL SECTIONS FOR COURSE WHEN CLICKED ON IN PROGRAM  #####################################
 
-create procedure spViewCourseSections
+CREATE procedure spViewCourseSections
 (
-@cID numeric(18, 0)
+@cID char(7)
 )
 
 as
 begin
 
-	select courseName, sectionName, sectionType, timeSlotID
-		from Course C, Section S, SectionTimeSlot STS
-			where C.courseID = @cID and S.courseID = @cID and S.sectionID = STS.sectionID
+	select courseName, sectionName, sectionType, day, startTime, endTime, S.sectionID
+		from Course C, Section S, SectionTimeSlot STS, TimeSlot T
+			where C.courseID = @cID and S.courseID = @cID and S.sectionID = STS.sectionID and STS.timeSlotID = T.timeSlotID
 
 end
 
 
-EXECUTE spViewCourseSections @cID = 1;
+EXECUTE spViewCourseSections @cID = 'CMPT101';
+
+
+
+
+CREATE Procedure spAllCourses
+as
+Begin
+Select C.courseID, C.courseName, C.courseDescription, C.credits
+from Course C
+
+End
 
 
 
 
 --  ####################### GET INDIVIDUAL COURSE DATA  #####################################
 
-create procedure spIndiviudalCourseInfo 
+CREATE procedure spIndiviudalCourseInfo
 (
 @cName varchar(max),
 @secName varchar(max),
 @secType varchar(max),
-@secTID numeric(18, 0)
+@secTID numeric(18, 0) -- sec id
 )
 as
 begin
-	select courseName, sectionType, timeSlotID, firstName, lastName
-		from Course C, Section S, SectionTimeSlot STS, Instructor I
-			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.timeSlotID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID
+	select courseName, sectionType, STS.timeSlotID, firstName, lastName, day, startTime, endTime 
+		from Course C, Section S, SectionTimeSlot STS, Instructor I, TimeSlot T
+			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.sectionID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID and T.timeSlotID = STS.timeSlotID
 
 end
 
-EXECUTE spIndiviudalCourseInfo @cName = 'CMPT 201', @secName = 'AS02', @secType = 'Lecture', @secTID = 5;
+EXECUTE spIndiviudalCourseInfo @cName = 'Practical Programming Methodology', @secName = 'SE01', @secType = 'Seminar', @secTID = 89;
 
 
 ----- UPDATE 2/13:
@@ -313,12 +313,16 @@ SELECT DISTINCT C.courseID, C.courseName, C.credits, C.courseDescription FROM Co
 WHERE S.courseID = C.courseID AND S.year>=YEAR(CURRENT_TIMESTAMP) AND S.semester = @semester
 END
 
-ALTER Procedure spSearchCourseByCourseID
+CREATE Procedure spSearchCourseByCourseID
+@semester varchar(MAX),
 @ID nvarchar(20)
 as
 Begin
-	Select C.courseID, C.courseName, S.sectionID, S.sectionType, S.sectionSize, S.sectionSize, S.enrolled, ST.timeSlotID, I.instructorID
-	from Course C, Section S, SectionTimeSlot ST, Instructor I
-	where C.courseID = S.courseID AND S.sectionID = ST.sectionID AND S.instructorID = I.instructorID
-	AND C.courseID LIKE '%'+@ID+'%' 
+	Select DISTINCT C.courseID, C.courseName, C.courseDescription, C.credits
+	from Course C, Section S
+	where C.courseID LIKE '%'+@ID+'%'
+      and C.courseID = S.courseID
+      and S.semester = @semester
 END
+
+DROP PROCEDURE spSearchCourseByCourseID

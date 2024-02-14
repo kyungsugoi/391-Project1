@@ -19,12 +19,16 @@ namespace WindowsFormsApp1
         public SqlCommand myCommand;
         public SqlDataReader myReader;
         public string sendData { get; set; }
+        public string hold;
+        public string secID;
         public CourseInfo()
         {
             InitializeComponent();
 
             // localhost will default to your server, no need to hardcode it anymore
-            String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+            //String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+            String connectionString = "Server =DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
+
             SqlConnection myConnection = new SqlConnection(connectionString);
 
             try
@@ -46,7 +50,7 @@ namespace WindowsFormsApp1
         //  ------------------------ ADD COURSE TO CART ----------------------------------------
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            sendData = ClassSearch.sendCourse;
+            sendData = hold;
          
             this.Close();
         }
@@ -110,7 +114,7 @@ namespace WindowsFormsApp1
                         txtID.Text = courseName;
                         string sectionType = reader["sectionType"].ToString();
                         txtName.Text = sectionType;
-                        string timeSlotID = reader["timeSlotID"].ToString();
+                        string timeSlotID = reader["day"].ToString() + " " + reader["startTime"].ToString() + " : " + reader["endTime"].ToString();
                         txtTime.Text = timeSlotID;
                         string fName = reader["firstName"].ToString();
                         string lName = reader["lastName"].ToString();
@@ -118,8 +122,8 @@ namespace WindowsFormsApp1
                         txtTeach.Text = fullName;
 
 
-                        string result = $"{courseName} - {secName} - {sectionType} - {timeSlotID} - {fullName}";
-                        sendData = result;
+                        string result = $"{courseName} - {secName} - {sectionType} - {timeSlotID} - {fullName} # {secTID}";
+                        hold = result;
                     }
                 }
             }
