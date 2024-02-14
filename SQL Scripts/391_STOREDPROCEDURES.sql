@@ -213,11 +213,11 @@ END;
 
 EXECUTE spStudentGPA @studentID=1;
 
-CREATE Procedure spSearchCourseByCourseID
+ALTER Procedure spSearchCourseByCourseID
 @ID nvarchar(50)
 as
 Begin
-Select C.courseID, C.courseName, S.sectionName, S.sectionType, S.semester, S.year, S.sectionSize, S.enrolled, I.lastName
+Select C.courseID, C.courseDescription, C.courseName, C.credits, S.sectionName, S.sectionType, S.semester, S.year, S.sectionSize, S.enrolled, I.firstName, I.lastName
 from Course C, Section S, Instructor I
 where C.courseID = S.courseID AND S.instructorID = I.instructorID AND C.courseID LIKE '%'+@ID+'%'
 End
@@ -249,22 +249,21 @@ End
 EXEC spSearchCourseByDepartment 'computer'
 
 --  ####################### LOGIN STORED PROCEDURE  #####################################
-create procedure spLogin
+alter procedure spLogin
 (
-@username varchar(max),
+@studentID numeric(18, 0),
 @password nvarchar(50)
 )
-
 as 
 begin
-	select firstName, password 
-		from Student
-			where firstName = @username and password = @password
+	select studentID, password 
+	from Student
+	where studentID = @studentID and password = @password
 end
 
 --  ####################### VIEW ALL SECTIONS FOR COURSE WHEN CLICKED ON IN PROGRAM  #####################################
 
-ALTER procedure spViewCourseSections
+CREATE procedure spViewCourseSections
 (
 @cID numeric(18, 0)
 )
@@ -285,19 +284,22 @@ EXECUTE spViewCourseSections @cID = 1;
 
 
 ALTER Procedure spAllCourses
+@ID
 as
-Begin
-Select C.courseID, C.courseName, C.courseDescription, C.credits
-from Course C
-
+begin
+    Select C.courseID, C.courseDescription, C.courseName, C.credits, S.sectionName, S.sectionType, S.semester, S.year, S.sectionSize, S.enrolled, I.firstName, I.lastName
+    from Course C, Section S, Instructor I
+    where C.courseID = S.courseID AND S.instructorID = I.instructorID AND C.courseID LIKE '%'+@ID+'%'
 End
+
+DROP PROCEDURE spAllCourses
 
 
 
 
 --  ####################### GET INDIVIDUAL COURSE DATA  #####################################
 
-ALTER procedure spIndiviudalCourseInfo
+CREATE procedure spIndiviudalCourseInfo
 (
 @cName varchar(max),
 @secName varchar(max),
@@ -324,7 +326,7 @@ SELECT DISTINCT C.courseID, C.courseName, C.credits, C.courseDescription FROM Co
 WHERE S.courseID = C.courseID AND S.year>=YEAR(CURRENT_TIMESTAMP) AND S.semester = @semester
 END
 
-ALTER Procedure spSearchCourseByCourseID
+CREATE Procedure spSearchCourseByCourseID
 @ID nvarchar(20)
 as
 Begin
@@ -333,3 +335,14 @@ Begin
 	where C.courseID = S.courseID AND S.sectionID = ST.sectionID AND S.instructorID = I.instructorID
 	AND C.courseID LIKE '%'+@ID+'%' 
 END
+
+CREATE VIEW vWActiveStudents
+WITH SCHEMABINDING
+AS
+SELECT studentID, firstName, lastName
+FROM dbo.Student
+WHERE activeStudent='true';
+
+DROP VIEW vWActiveStudents;
+
+SELECT * FROM vWActiveStudents;

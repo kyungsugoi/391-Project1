@@ -26,8 +26,7 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             // localhost will default to your server, no need to hardcode it anymore
-            String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
-            //String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+            String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
 
             SqlConnection myConnection = new SqlConnection(connectionString);
 
@@ -165,19 +164,32 @@ namespace WindowsFormsApp1
         //  ------------------------ SEARCH ----------------------------------------
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            dataCourseOfferings.Rows.Clear();
+
             // SKELETON FOR SEARCHING WILL NEED A DIF ALGORITHM FOR WHEN NEEDING TO SEARCH DB
             //string[] cIDS = new string[] { "291", "391" }; // change to be course ids offered in sem
             string search = txtSearch.Text;
-            DataTable dt = new DataTable();
             myCommand.CommandText = "spSearchCourseByCourseID";
             myCommand.Parameters.Clear();
             myCommand.CommandType = CommandType.StoredProcedure;
             myCommand.Parameters.AddWithValue("@ID", search);
-            SqlDataReader reader = myCommand.ExecuteReader();
-            while (!reader.IsClosed)
+
+            using (SqlDataReader reader = myCommand.ExecuteReader())
             {
-                dt.Load(reader);
-                dataCourseOfferings.DataSource = dt;
+                while (reader.Read())
+                {
+                    string courseID = reader["courseID"].ToString();
+                    string courseName = reader["courseName"].ToString();
+                    string courseDesc = reader["courseDescription"].ToString();
+                    string credits = reader["credits"].ToString();
+                    string sectionName = reader["sectionName"].ToString();
+                    string sectionType = reader["sectionType"].ToString();
+                    string sectionSize = reader["sectionSize"].ToString();
+                    string enrolled = reader["enrolled"].ToString();
+
+
+                    dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits, sectionName, sectionType, sectionSize, enrolled);
+                }
             }
 
             //foreach (string course in cIDS) // iterate through course list til match found
@@ -213,15 +225,11 @@ namespace WindowsFormsApp1
                         {
                             string courseID = reader["courseID"].ToString();
                             string courseName = reader["courseName"].ToString();
+                            string courseDesc = reader["courseDescription"].ToString();
                             string credits = reader["credits"].ToString();
-                            string section = reader["sectionName"].ToString();
-                            string sectionType = reader["sectionType"].ToString();
-                            string semes = reader["semester"].ToString();
-                            string year = reader["year"].ToString();
 
 
-
-                            dataHistory.Rows.Add(courseID, courseName, credits, section, sectionType, semes, year);
+                            dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits);
 
                         }
                     }
@@ -249,8 +257,6 @@ namespace WindowsFormsApp1
             {
                 lstClassBox.Items.Add(recString);
             }
-
-
         }
 
         private void ClassSearch_Load(object sender, EventArgs e)
@@ -299,9 +305,13 @@ namespace WindowsFormsApp1
                         string courseName = reader["courseName"].ToString();
                         string courseDesc = reader["courseDescription"].ToString();
                         string credits = reader["credits"].ToString();
+                        string sectionName = reader["sectionName"].ToString();
+                        string sectionType = reader["sectionType"].ToString();
+                        string sectionSize = reader["sectionSize"].ToString();
+                        string enrolled = reader["enrolled"].ToString();
 
 
-                        dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits);
+                        dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits, sectionName, sectionType, sectionSize, enrolled);
                     }
                 }
             }
