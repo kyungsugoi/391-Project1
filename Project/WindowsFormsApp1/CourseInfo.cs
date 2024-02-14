@@ -20,6 +20,7 @@ namespace WindowsFormsApp1
         public SqlDataReader myReader;
         public string sendData { get; set; }
         public string hold;
+        public string secID;
         public CourseInfo()
         {
             InitializeComponent();
@@ -121,7 +122,7 @@ namespace WindowsFormsApp1
                         txtTeach.Text = fullName;
 
 
-                        string result = $"{courseName} - {secName} - {sectionType} - {timeSlotID} - {fullName}";
+                        string result = $"{courseName} - {secName} - {sectionType} - {timeSlotID} - {fullName} # {secTID}";
                         hold = result;
                     }
                 }

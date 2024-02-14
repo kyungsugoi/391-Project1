@@ -351,7 +351,39 @@ namespace WindowsFormsApp1
 
         private void btnEnroll_Click(object sender, EventArgs e)
         {
+            // Check if an item is selected in the ListBox
+            if (lstClassBox.SelectedIndex != -1)
+            {
+                // do stuff
+                string course = lstClassBox.Text;
+                string[] info = course.Split('#');
+                string sID = info[1].Trim();
 
+                try
+                {
+                    myCommand.CommandText = "spEnroll";
+                    myCommand.CommandType = CommandType.StoredProcedure;
+
+                    myCommand.Parameters.Clear();
+                    myCommand.Parameters.AddWithValue("@studentID", int.Parse(studentID));
+                    myCommand.Parameters.AddWithValue("@sectionID", int.Parse(sID));
+
+                    myCommand.ExecuteNonQuery();
+
+                    // Assuming you want to del
+                    lstClassBox.Items.RemoveAt(lstClassBox.SelectedIndex);
+
+                    MessageBox.Show("Enrollment successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select an item to remove.", "No Item Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void btnEnrollAll_Click(object sender, EventArgs e)

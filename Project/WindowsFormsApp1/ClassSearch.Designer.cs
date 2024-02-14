@@ -138,6 +138,7 @@
             this.lblTest.Size = new System.Drawing.Size(24, 13);
             this.lblTest.TabIndex = 15;
             this.lblTest.Text = "test";
+            this.lblTest.Visible = false;
             // 
             // lstCourses
             // 
