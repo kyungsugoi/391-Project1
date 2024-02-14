@@ -26,8 +26,8 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             // localhost will default to your server, no need to hardcode it anymore
-            String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
-            //String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+            // String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
+            String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
 
             SqlConnection myConnection = new SqlConnection(connectionString);
 
@@ -165,31 +165,39 @@ namespace WindowsFormsApp1
         //  ------------------------ SEARCH ----------------------------------------
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            // SKELETON FOR SEARCHING WILL NEED A DIF ALGORITHM FOR WHEN NEEDING TO SEARCH DB
-            //string[] cIDS = new string[] { "291", "391" }; // change to be course ids offered in sem
             string search = txtSearch.Text;
+            string semester = cmbSemester.Text;
             DataTable dt = new DataTable();
             myCommand.CommandText = "spSearchCourseByCourseID";
             myCommand.Parameters.Clear();
             myCommand.CommandType = CommandType.StoredProcedure;
+            myCommand.Parameters.AddWithValue("@semester", semester);
             myCommand.Parameters.AddWithValue("@ID", search);
-            SqlDataReader reader = myCommand.ExecuteReader();
-            while (!reader.IsClosed)
+
+            using (SqlDataReader reader = myCommand.ExecuteReader())
             {
-                dt.Load(reader);
-                dataCourseOfferings.DataSource = dt;
+                // Check if any data is returned
+                if (reader.HasRows)
+                {
+                    // Clear rows only if data is returned
+                    dataCourseOfferings.Rows.Clear();
+
+                    while (reader.Read())
+                    {
+                        string courseID = reader["courseID"].ToString();
+                        string courseName = reader["courseName"].ToString();
+                        string courseDesc = reader["courseDescription"].ToString();
+                        string credits = reader["credits"].ToString();
+
+                        dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits);
+                    }
+                }
+                else
+                {
+                    // Inform the user that no data matching the search parameters was found
+                    MessageBox.Show("No classes matching the search was found, please ensure correct semester and/or course ID.");
+                }
             }
-
-            //foreach (string course in cIDS) // iterate through course list til match found
-            //{
-            //if (search.Equals(course)) // instead of .equal .startswith? .contains?
-            //{
-            //   dataCourseOfferings.Rows.Add("391", "CMPT 391", "2024-01-03 To 2024-04-18", "Dr. Funk");
-
-            //}
-            //}
-
-
         }
 
         //  ------------------------ TAB CHANGED ----------------------------------------
