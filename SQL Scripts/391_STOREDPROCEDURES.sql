@@ -41,7 +41,7 @@ EXECUTE spViewStudent @studentID=1;
 
 -- SP to add student
 -- YEJI: It wouldn't add a student unless studentID is given, so I added studentID field
-ALTER PROCEDURE spAddStudent
+CREATE PROCEDURE spAddStudent
 @studentID numeric(18, 0),
 @firstName varchar(MAX),
 @lastName varchar(MAX),
@@ -249,22 +249,21 @@ End
 EXEC spSearchCourseByDepartment 'computer'
 
 --  ####################### LOGIN STORED PROCEDURE  #####################################
-create procedure spLogin
+alter procedure spLogin
 (
-@username varchar(max),
+@stuID numeric(18, 0),
 @password nvarchar(50)
 )
-
 as 
 begin
-	select firstName, password 
-		from Student
-			where firstName = @username and password = @password
+	select studentID, password 
+	from Student
+	where studentID = @stuID and password = @password
 end
 
 --  ####################### VIEW ALL SECTIONS FOR COURSE WHEN CLICKED ON IN PROGRAM  #####################################
 
-ALTER procedure spViewCourseSections
+create procedure spViewCourseSections
 (
 @cID numeric(18, 0)
 )
@@ -272,32 +271,27 @@ ALTER procedure spViewCourseSections
 as
 begin
 
-	select courseName, sectionName, sectionType, day, startTime, endTime, S.sectionID
-		from Course C, Section S, SectionTimeSlot STS, TimeSlot T
-			where C.courseID = @cID and S.courseID = @cID and S.sectionID = STS.sectionID and STS.timeSlotID = T.timeSlotID
+	select courseName, sectionName, sectionType, timeSlotID
+		from Course C, Section S, SectionTimeSlot STS
+			where C.courseID = @cID and S.courseID = @cID and S.sectionID = STS.sectionID
 
 end
 
 
 EXECUTE spViewCourseSections @cID = 1;
 
-
-
-
-ALTER Procedure spAllCourses
+CREATE Procedure spAllCourses
 as
 Begin
-Select C.courseID, C.courseName, C.courseDescription, C.credits
-from Course C
-
+Select C.courseID, C.courseDescription, C.courseName, C.credits, S.sectionName, S.sectionType, S.semester, S.year, S.sectionSize, S.enrolled, I.firstName, I.lastName
+from Course C, Section S, Instructor I
+where C.courseID = S.courseID AND S.instructorID = I.instructorID
 End
-
-
 
 
 --  ####################### GET INDIVIDUAL COURSE DATA  #####################################
 
-ALTER procedure spIndiviudalCourseInfo
+create procedure spIndiviudalCourseInfo 
 (
 @cName varchar(max),
 @secName varchar(max),
@@ -306,9 +300,9 @@ ALTER procedure spIndiviudalCourseInfo
 )
 as
 begin
-	select courseName, sectionType, STS.timeSlotID, firstName, lastName, day, startTime, endTime 
-		from Course C, Section S, SectionTimeSlot STS, Instructor I, TimeSlot T
-			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.timeSlotID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID and T.timeSlotID = S.sectionID
+	select courseName, sectionType, timeSlotID, firstName, lastName
+		from Course C, Section S, SectionTimeSlot STS, Instructor I
+			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.timeSlotID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID
 
 end
 
@@ -324,7 +318,7 @@ SELECT DISTINCT C.courseID, C.courseName, C.credits, C.courseDescription FROM Co
 WHERE S.courseID = C.courseID AND S.year>=YEAR(CURRENT_TIMESTAMP) AND S.semester = @semester
 END
 
-ALTER Procedure spSearchCourseByCourseID
+CREATE Procedure spSearchCourseByCourseID
 @ID nvarchar(20)
 as
 Begin
