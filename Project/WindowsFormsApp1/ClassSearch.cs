@@ -26,8 +26,8 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             // localhost will default to your server, no need to hardcode it anymore
-            String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
-            //String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+            // String connectionString = "Server = DESKTOP-5HTNF3D\\SQLEXPRESS; Database = CMPT391_1; Trusted_Connection = yes;";
+            String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
 
             SqlConnection myConnection = new SqlConnection(connectionString);
 
@@ -165,31 +165,43 @@ namespace WindowsFormsApp1
         //  ------------------------ SEARCH ----------------------------------------
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            dataCourseOfferings.Rows.Clear();
             // SKELETON FOR SEARCHING WILL NEED A DIF ALGORITHM FOR WHEN NEEDING TO SEARCH DB
             //string[] cIDS = new string[] { "291", "391" }; // change to be course ids offered in sem
             string search = txtSearch.Text;
-            DataTable dt = new DataTable();
             myCommand.CommandText = "spSearchCourseByCourseID";
             myCommand.Parameters.Clear();
             myCommand.CommandType = CommandType.StoredProcedure;
             myCommand.Parameters.AddWithValue("@ID", search);
-            SqlDataReader reader = myCommand.ExecuteReader();
-            while (!reader.IsClosed)
+
+            using (SqlDataReader reader = myCommand.ExecuteReader())
             {
-                dt.Load(reader);
-                dataCourseOfferings.DataSource = dt;
+                while (reader.Read())
+                {
+                    string courseID = reader["courseID"].ToString();
+                    string courseName = reader["courseName"].ToString();
+                    string courseDesc = reader["courseDescription"].ToString();
+                    string credits = reader["credits"].ToString();
+                    string sectionName = reader["sectionName"].ToString();
+                    string sectionType = reader["sectionType"].ToString();
+                    string sectionSize = reader["sectionSize"].ToString();
+                    string enrolled = reader["enrolled"].ToString();
+
+
+                    dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits, sectionName, sectionType, sectionSize, enrolled);
+                }
+
+                //foreach (string course in cIDS) // iterate through course list til match found
+                //{
+                //if (search.Equals(course)) // instead of .equal .startswith? .contains?
+                //{
+                //   dataCourseOfferings.Rows.Add("391", "CMPT 391", "2024-01-03 To 2024-04-18", "Dr. Funk");
+
+                //}
+                //}
+
+
             }
-
-            //foreach (string course in cIDS) // iterate through course list til match found
-            //{
-            //if (search.Equals(course)) // instead of .equal .startswith? .contains?
-            //{
-            //   dataCourseOfferings.Rows.Add("391", "CMPT 391", "2024-01-03 To 2024-04-18", "Dr. Funk");
-
-            //}
-            //}
-
-
         }
 
         //  ------------------------ TAB CHANGED ----------------------------------------
@@ -299,9 +311,14 @@ namespace WindowsFormsApp1
                         string courseName = reader["courseName"].ToString();
                         string courseDesc = reader["courseDescription"].ToString();
                         string credits = reader["credits"].ToString();
+                        string sectionName = reader["sectionName"].ToString();
+                        string sectionType = reader["sectionType"].ToString();
+                        string sectionSize = reader["sectionSize"].ToString();
+                        string enrolled = reader["enrolled"].ToString();
 
 
-                        dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits);
+                        dataCourseOfferings.Rows.Add(courseID, courseName, courseDesc, credits, sectionName, sectionType, sectionSize, enrolled);
+
                     }
                 }
             }

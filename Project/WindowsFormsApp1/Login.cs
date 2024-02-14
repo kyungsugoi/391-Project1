@@ -24,8 +24,8 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
             // localhost will default to your server, no need to hardcode it anymore
-            string connectionString = "Server=DESKTOP-5HTNF3D\\SQLEXPRESS;Database=CMPT391_1;Trusted_Connection=yes;";
-            //String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
+            // string connectionString = "Server=DESKTOP-5HTNF3D\\SQLEXPRESS;Database=CMPT391_1;Trusted_Connection=yes;";
+            String connectionString = "Server = localhost; Database = CMPT391_1; Trusted_Connection = yes;";
 
             myConnection = new SqlConnection(connectionString);
 

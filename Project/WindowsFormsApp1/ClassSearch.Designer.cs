@@ -35,13 +35,10 @@
             this.lblTest = new System.Windows.Forms.Label();
             this.lstCourses = new System.Windows.Forms.ListBox();
             this.dataCourseOfferings = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmbSemester = new System.Windows.Forms.ComboBox();
             this.txtSearch = new System.Windows.Forms.TextBox();
             this.tabCart = new System.Windows.Forms.TabPage();
+            this.btnClear = new System.Windows.Forms.Button();
             this.btnEnrollAll = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,7 +68,14 @@
             this.courseBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.courseTableAdapter = new WindowsFormsApp1.CMPT391_1DataSet4TableAdapters.CourseTableAdapter();
             this.cMPT3911DataSet41BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.btnClear = new System.Windows.Forms.Button();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabClasses.SuspendLayout();
             this.tabCourse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataCourseOfferings)).BeginInit();
@@ -160,33 +164,17 @@
             this.Column1,
             this.Column2,
             this.Column3,
-            this.Column4});
+            this.Column4,
+            this.Column6,
+            this.Column7,
+            this.Column8,
+            this.Column9});
             this.dataCourseOfferings.Location = new System.Drawing.Point(6, 98);
             this.dataCourseOfferings.Name = "dataCourseOfferings";
             this.dataCourseOfferings.RowHeadersWidth = 51;
             this.dataCourseOfferings.Size = new System.Drawing.Size(736, 381);
             this.dataCourseOfferings.TabIndex = 13;
             this.dataCourseOfferings.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataCourseOfferings_CellClick);
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Course ID";
-            this.Column1.Name = "Column1";
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Course Name";
-            this.Column2.Name = "Column2";
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Course Description";
-            this.Column3.Name = "Column3";
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Credits";
-            this.Column4.Name = "Column4";
             // 
             // cmbSemester
             // 
@@ -225,6 +213,17 @@
             this.tabCart.TabIndex = 1;
             this.tabCart.Text = "Shopping Cart";
             this.tabCart.UseVisualStyleBackColor = true;
+            // 
+            // btnClear
+            // 
+            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.btnClear.Location = new System.Drawing.Point(6, 427);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(125, 67);
+            this.btnClear.TabIndex = 13;
+            this.btnClear.Text = "Clear Cart";
+            this.btnClear.UseVisualStyleBackColor = false;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnEnrollAll
             // 
@@ -439,16 +438,45 @@
             this.cMPT3911DataSet41BindingSource.DataSource = this.cMPT391_1DataSet41;
             this.cMPT3911DataSet41BindingSource.Position = 0;
             // 
-            // btnClear
+            // Column1
             // 
-            this.btnClear.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.btnClear.Location = new System.Drawing.Point(6, 427);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(125, 67);
-            this.btnClear.TabIndex = 13;
-            this.btnClear.Text = "Clear Cart";
-            this.btnClear.UseVisualStyleBackColor = false;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.Column1.HeaderText = "Course ID";
+            this.Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Course Name";
+            this.Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Course Description";
+            this.Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "Credits";
+            this.Column4.Name = "Column4";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "Section Name";
+            this.Column6.Name = "Column6";
+            // 
+            // Column7
+            // 
+            this.Column7.HeaderText = "Section Type";
+            this.Column7.Name = "Column7";
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "Size";
+            this.Column8.Name = "Column8";
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "Enrolled";
+            this.Column9.Name = "Column9";
             // 
             // ClassSearch
             // 
@@ -513,10 +541,6 @@
         private System.Windows.Forms.BindingSource courseBindingSource1;
         private System.Windows.Forms.DataGridView dataCourseOfferings;
         private System.Windows.Forms.BindingSource cMPT3911DataSet41BindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn CourseID;
         private System.Windows.Forms.DataGridViewTextBoxColumn CourseName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Credits;
@@ -529,5 +553,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TabPage tabEnroll;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
     }
 }

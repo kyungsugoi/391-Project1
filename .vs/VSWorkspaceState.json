@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Project",
+    "\\Project\\WindowsFormsApp1"
   ],
+  "SelectedNode": "\\Project\\WindowsFormsApp1\\ClassSearch.cs",
   "PreviewInSolutionExplorer": false
 }

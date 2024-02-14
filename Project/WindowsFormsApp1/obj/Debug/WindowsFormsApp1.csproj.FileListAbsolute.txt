@@ -25,3 +25,16 @@ C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsF
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 C:\Users\Beast\OneDrive\Documents\Git\391-Project1\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.CourseInfo.resources
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.ClassSearch.resources
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Enroll.resources
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Login.resources
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Michael\391-Project1\Project\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
