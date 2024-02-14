@@ -264,7 +264,7 @@ end
 
 --  ####################### VIEW ALL SECTIONS FOR COURSE WHEN CLICKED ON IN PROGRAM  #####################################
 
-create procedure spViewCourseSections
+ALTER procedure spViewCourseSections
 (
 @cID numeric(18, 0)
 )
@@ -272,9 +272,9 @@ create procedure spViewCourseSections
 as
 begin
 
-	select courseName, sectionName, sectionType, timeSlotID
-		from Course C, Section S, SectionTimeSlot STS
-			where C.courseID = @cID and S.courseID = @cID and S.sectionID = STS.sectionID
+	select courseName, sectionName, sectionType, day, startTime, endTime, S.sectionID
+		from Course C, Section S, SectionTimeSlot STS, TimeSlot T
+			where C.courseID = @cID and S.courseID = @cID and S.sectionID = STS.sectionID and STS.timeSlotID = T.timeSlotID
 
 end
 
@@ -284,9 +284,20 @@ EXECUTE spViewCourseSections @cID = 1;
 
 
 
+ALTER Procedure spAllCourses
+as
+Begin
+Select C.courseID, C.courseName, C.courseDescription, C.credits
+from Course C
+
+End
+
+
+
+
 --  ####################### GET INDIVIDUAL COURSE DATA  #####################################
 
-create procedure spIndiviudalCourseInfo 
+ALTER procedure spIndiviudalCourseInfo
 (
 @cName varchar(max),
 @secName varchar(max),
@@ -295,9 +306,9 @@ create procedure spIndiviudalCourseInfo
 )
 as
 begin
-	select courseName, sectionType, timeSlotID, firstName, lastName
-		from Course C, Section S, SectionTimeSlot STS, Instructor I
-			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.timeSlotID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID
+	select courseName, sectionType, STS.timeSlotID, firstName, lastName, day, startTime, endTime 
+		from Course C, Section S, SectionTimeSlot STS, Instructor I, TimeSlot T
+			where C.courseName = @cName and S.sectionName = @secName and S.sectionType = @secType and STS.timeSlotID = @secTID and I.instructorID = S.instructorID and S.sectionID = STS.sectionID and T.timeSlotID = S.sectionID
 
 end
 
